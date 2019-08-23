@@ -1,0 +1,70 @@
+version: '2'
+
+services:
+  ecstore:
+    image: 'ecstore/docker-ecstore:php56-swooleloader-2.0.2'
+    ports:
+      - 80:80
+    volumes:
+      - /data/httpd/shopex/ecstore4:/data/httpd
+    links:
+      - mysql
+      #- ftp
+      # - redis
+    environment:
+      - WEBROOT=/data/httpd/
+    networks:
+      - ecstore
+
+  # redis:
+  #   image: redis
+  #   hostname: redis
+  #   ports:
+  #     - "8379:6379"
+  #   volumes:
+  #     - ./storage/redis:/data
+  #   networks:
+  #     - ecstore
+
+  mysql:
+    image: mysql:5.6
+    hostname: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./storage/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    networks:
+      - ecstore
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    ports:
+      - "8004:80"
+    links:
+      - mysql
+    environment:
+      - PMA_HOST=mysql
+    networks:
+      - ecstore
+
+#   ftp:
+#     image: bogem/ftp
+#     hostname: ftp
+#     environment:
+#       - FTP_USER=ftp
+#       - FTP_PASS=ftp
+#       - PASV_ADDRESS=0.0.0.0
+#     volumes:
+#       - ./storage/ftp:/home/vsftpd
+#     ports:
+#       - "20:20"
+#       - "21:21"
+# #      - "47400-47470:47400-47470"
+#     networks:
+#        - ecstore
+
+networks:
+  ecstore:
+    driver: bridge
