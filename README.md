@@ -12,6 +12,8 @@
 
 使用docker-compose 一键启动（ 请自行安装 传送门 https://docs.docker.com/compose/install/ ）
 
+*注意*：如果你想使用以下第一种方式，你只需要一个docker-compose.yml文件以及下边对应的一条命令即可
+
 ```bash
 
 # 启动php56+mysql+nginx 适用于（Ecstore3.x/B2B2C4.x的ZendGuard加密版本）
