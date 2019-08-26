@@ -2,7 +2,7 @@ version: '2'
 
 services:
   ecstore:
-    image: 'ecstore/docker-ecstore:php72-swooleloader'
+    image: 'wykrisdev/shopex-docker:php72-swooleloader'
     container_name: bbc-base
     ports:
       - 80:80

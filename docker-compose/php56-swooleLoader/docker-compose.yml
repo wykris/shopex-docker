@@ -2,11 +2,11 @@ version: '2'
 
 services:
   ecstore:
-    image: 'ecstore/docker-ecstore:php56-swooleloader-2.0.2'
+    image: 'wykrisdev/shopex-docker:php56-swooleloader-mysql'
     ports:
       - 80:80
     volumes:
-      - /data/httpd/shopex/ecstore4:/data/httpd
+      - ./:/data/httpd
     links:
       - mysql
       #- ftp
