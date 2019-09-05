@@ -24,7 +24,7 @@ fi
 
 # Set custom license_path
 if [ ! -z "$LICENSE_PATH" ]; then
- sed -i "s#swoole_license_files=/data/httpd/config/developer.zl#swoole_license_files=${WEBROOT}#g" /etc/php.d/swoole_loader.ini
+ sed -i "s#swoole_license_files=/data/httpd/config/developer.zl#swoole_license_files=${LICENSE_PATH}#g" /etc/php.d/swoole_loader.ini
 else
  license_path=/data/httpd/config/developer.zl
 fi
@@ -138,7 +138,7 @@ if [ ! -z "$PUID" ]; then
   adduser -D -S -h /var/cache/www -s /sbin/nologin -G www -u ${PUID} www
 else
   # Always chown webroot for better mounting
-  chown -Rf www.www /data/httpd
+  sudo chown -Rf www.www /data/httpd
   chown -Rf www.www /var/lib/nginx
   chown -Rf mysql.mysql /data/mysql
 fi
