@@ -3,8 +3,7 @@ version: '2'
 #代码目录请在.env 文件中配置
 services:
   ecstore:
-    # image: 'wykrisdev/shopex-docker:php72-swooleloader'
-    build: '/data/docker/docker-shopex/shopex-docker/php72-swooleloader'
+    image: 'wykrisdev/shopex-docker:php72-swooleloader'
     container_name: bbc-base
     ports:
       - 80:80
