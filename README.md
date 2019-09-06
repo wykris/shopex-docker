@@ -17,9 +17,23 @@
 ```bash
 
 # 启动php56+mysql+nginx 适用于（Ecstore3.x/B2B2C4.x的ZendGuard加密版本）
+# 在启动之前，请先将.env里边的相关变量设置为自己的实际目录 然后找到相应版本的yml目录，执行一下命令
 cd ./docker-compose/php56-zendGuard
 
 docker-compose up -d
+
+#如果修改了.env文件中相关设置，请执行以下命令
+
+docker-compose build
+
+docker-compose up -d
+
+#如果想要添加域名访问不同的项目（前提是 都是php72的swoole加密版本）
+#请在合适目录下 新建.conf文件 并执行以下命令 （推荐使用对应版本中 conf/nginx-site.conf 的复制文件修改）
+
+docker cp xxx.conf bbc-base:/etc/nginx/conf.d/
+
+docker-compose restart ecstore
 
 
 # 启动php56+mysql+nginx 适用于（Ecstore5.x的swoole_loader加密版本）
