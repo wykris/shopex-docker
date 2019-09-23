@@ -10,7 +10,15 @@ RUN rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.
     yum install redis -y &&\
     yum clean all && rm -rf /tmp/* && rm -rf /var/tmp/* &&\    
     easy_install supervisor &&\
-    cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+    cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime &&\
+    wget https://nodejs.org/dist/v10.16.3/node-v10.16.3-linux-x64.tar.xz &&\
+    tar xf  node-v10.16.3-linux-x64.tar.xz &&\
+    cd node-v10.16.3-linux-x64 &&\
+    ln -s /node-v10.16.3-linux-x64/bin/npm /usr/local/bin/ &&\
+    ln -s /node-v10.16.3-linux-x64/bin/node /usr/local/bin/ &&\
+    npm install pm2 -g &&\
+    ln -s /node-v10.16.3-linux-x64/lib/node_modules/pm2/bin/pm2 /usr/local/bin/
+
 
 ENV fpm_conf /etc/php-fpm.d/www.conf
 ENV php_ini /etc/php.ini
