@@ -1,12 +1,12 @@
 version: '2'
-
 #代码目录请在.env 文件中配置
 services:
   ecstore:
     image: 'wykrisdev/shopex-docker:php72-swooleloader'
+    # build: '/data/docker/docker-shopex/shopex-docker/php72-swooleloader'
     container_name: bbc-base
     ports:
-      - 80:80
+      - 8007:80
     volumes:
       #本地路径/远程路径
       - ${coderoot}:/data/httpd
@@ -27,7 +27,7 @@ services:
     hostname: redis
     container_name: bbc-redis
     ports:
-      - "6379:6379"
+      - "63790:6379"
     volumes:
       - ${storage_path}/redis:/data
     networks:
@@ -38,7 +38,7 @@ services:
     hostname: mysql
     container_name: bbc-mysql
     ports:
-      - "3306:3306"
+      - "33060:3306"
     volumes:
       - ${storage_path}/mysql:/var/lib/mysql
     environment:
@@ -46,17 +46,17 @@ services:
     networks:
       - bbc
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    ports:
-      - "8004:80"
-    links:
-      - mysql
-    environment:
-      - PMA_HOST=mysql
-    networks:
-      - bbc
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:latest
+  #   container_name: phpmyadmin
+  #   ports:
+  #     - "8004:80"
+  #   links:
+  #     - mysql
+  #   environment:
+  #     - PMA_HOST=mysql
+  #   networks:
+  #     - bbc
 
   ftp:
     image: bogem/ftp

@@ -1,19 +1,21 @@
 version: '2'
-
+#代码目录请在.env 文件中配置
 services:
-  ecstore:
-    image: 'wykrisdev/shopex-docker:php56-ZendGuardLoader'
+  b2c:
+    image: 'wykrisdev/shopex-docker:php56-zendGuardLoader'
     ports:
       - 8002:80
     volumes:
-      - .:/data/httpd
+      - ${coderoot}:/data/httpd
     links:
       - mysql
       # - ftp
       # - redis
     environment:
-      - WEBROOT=/data/httpd/
-      - LICENSE_PATH=/data/httpd/config/
+      #默认web的路径
+      - WEBROOT="${webroot}"
+      #默认zl文件的路径
+      - LICENSE_PATH="${license_path}"
     networks:
       - ecstore
 
@@ -30,10 +32,11 @@ services:
   mysql:
     image: mysql:5.6
     hostname: mysql
+    container_name: ecstore-mysql
     ports:
-      - "8406:3306"
+      - "8806:3306"
     volumes:
-      - ./storage/mysql:/var/lib/mysql
+      - ${storage_path}/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
@@ -62,7 +65,7 @@ services:
 #     ports:
 #       - "20:20"
 #       - "21:21"
-# #      - "47400-47470:47400-47470"
+#       - "47400-47470:47400-47470"
 #     networks:
 #        - ecstore
 
