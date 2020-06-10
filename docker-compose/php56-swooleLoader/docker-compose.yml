@@ -4,15 +4,19 @@ services:
   ecstore:
     image: 'wykrisdev/shopex-docker:php56-swooleloader-mysql'
     ports:
-      - 80:80
+      - 8006:80
     volumes:
-      - ./:/data/httpd
+      #本地路径/远程路径
+      - ${coderoot}:/data/httpd
     links:
       - mysql
       #- ftp
       # - redis
     environment:
-      - WEBROOT=/data/httpd/
+      #默认web的路径
+      - WEBROOT="${webroot}"
+      #默认zl文件的路径
+      - LICENSE_PATH="${license_path}"
     networks:
       - ecstore
 
@@ -22,7 +26,7 @@ services:
   #   ports:
   #     - "8379:6379"
   #   volumes:
-  #     - ./storage/redis:/data
+  #     - ${storage_path}/redis:/data
   #   networks:
   #     - ecstore
 
@@ -32,7 +36,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./storage/mysql:/var/lib/mysql
+      - ${storage_path}/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
@@ -57,7 +61,7 @@ services:
 #       - FTP_PASS=ftp
 #       - PASV_ADDRESS=0.0.0.0
 #     volumes:
-#       - ./storage/ftp:/home/vsftpd
+#       - ${storage_path}/ftp:/home/vsftpd
 #     ports:
 #       - "20:20"
 #       - "21:21"
