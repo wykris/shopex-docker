@@ -36,7 +36,7 @@ services:
     ports:
       - "8806:3306"
     volumes:
-      - ${storage_path}/mysql:/var/lib/mysql
+      - ${storage_path}/php56/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:

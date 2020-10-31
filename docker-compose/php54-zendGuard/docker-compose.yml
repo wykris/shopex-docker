@@ -1,17 +1,16 @@
 version: '2'
-
+#代码目录请在.env 文件中配置
 services:
-  ecstore:
-    image: 'wykrisdev/shopex-docker:php56-swooleloader-2.0.2-mysql'
+  bbc:
+    image: 'wykrisdev/shopex-docker:php54-zendGuardLoader'
     ports:
-      - 8006:80
+      - 8400:80
     volumes:
-      #本地路径/远程路径
       - ${coderoot}:/data/httpd
     links:
       - mysql
-      #- ftp
-      # - redis
+      # - ftp
+      - redis
     environment:
       #默认web的路径
       - WEBROOT="${webroot}"
@@ -20,23 +19,24 @@ services:
     networks:
       - ecstore
 
-  # redis:
-  #   image: redis
-  #   hostname: redis
-  #   ports:
-  #     - "8379:6379"
-  #   volumes:
-  #     - ${storage_path}/redis:/data
-  #   networks:
-  #     - ecstore
+  redis:
+    image: redis
+    hostname: redis
+    ports:
+      - "8379:6379"
+    volumes:
+      - ./storage/redis:/data
+    networks:
+      - ecstore
 
   mysql:
     image: mysql:5.6
     hostname: mysql
+    container_name: mysql56
     ports:
-      - "3306:3306"
+      - "8806:3306"
     volumes:
-      - ${storage_path}/mysql:/var/lib/mysql
+      - ${storage_path}/php56/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
@@ -45,7 +45,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
     ports:
-      - "8004:80"
+      - "8005:80"
     links:
       - mysql
     environment:
@@ -61,11 +61,11 @@ services:
 #       - FTP_PASS=ftp
 #       - PASV_ADDRESS=0.0.0.0
 #     volumes:
-#       - ${storage_path}/ftp:/home/vsftpd
+#       - ./storage/ftp:/home/vsftpd
 #     ports:
 #       - "20:20"
 #       - "21:21"
-# #      - "47400-47470:47400-47470"
+#       - "47400-47470:47400-47470"
 #     networks:
 #        - ecstore
 

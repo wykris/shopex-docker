@@ -40,7 +40,7 @@ services:
     ports:
       - "33060:3306"
     volumes:
-      - ${storage_path}/mysql:/var/lib/mysql
+      - ${storage_path}/mysql56/mysql:/var/lib/mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     networks:
